@@ -1,0 +1,26 @@
+command
+
+composer create-project laravel/laravel Laravel.local
+
+php artisan serve
+
+php artisan make:model
+create_tasks_table
+php artisan make:migration
+php artisan make:request
+
+
+php artisan make:resource TaskResource
+
+php artisan install:api
+
+php artisan route:list --path=api
+
+php artisan config:publish cors
+php artisan make:controller Auth/LoginController -i
+
+wsl -l -v
+wsl --set-version Ubuntu 2
+bcdedit /enum | findstr -i hypervisorlaunchtype
+bcdedit /set hypervisorlaunchtype Auto
+wsl --install
