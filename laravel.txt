@@ -13,7 +13,7 @@ php artisan make:request
 php artisan make:resource TaskResource
 
 php artisan install:api
-
+//xem danh sach api
 php artisan route:list --path=api
 
 php artisan config:publish cors
@@ -24,3 +24,7 @@ wsl --set-version Ubuntu 2
 bcdedit /enum | findstr -i hypervisorlaunchtype
 bcdedit /set hypervisorlaunchtype Auto
 wsl --install
+
+//migrate
+php artisan make:migration add_user_id_to_tasks 
+php artisan migrate:fresh --seed
