@@ -28,3 +28,14 @@ wsl --install
 //migrate
 php artisan make:migration add_user_id_to_tasks 
 php artisan migrate:fresh --seed
+
+command visual
+>import class(ctrl + alt + i)
+>save
+
+
+---------
+Vue:
+npm init vue@latest
+npm init vite@latest
+browser: vite:new/vue

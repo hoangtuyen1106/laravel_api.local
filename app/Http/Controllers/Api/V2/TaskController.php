@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Api\V2;
 
 
+use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TaskResource;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
-use App\Http\Resources\TaskResource;
-use App\Models\Task;
 
 class TaskController extends Controller
 {
@@ -17,6 +18,7 @@ class TaskController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Task::class);
         return TaskResource::collection(auth()->user()->tasks()->get());
     }
 
@@ -25,6 +27,12 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
+        // if( request()->user()->cannot('create', Task::class)) {
+        //     abort(403, "this action is unauthorized.");
+        // }
+
+        Gate::authorize('create', Task::class);
+
         $task = $request->user()->tasks->create($request->validated());
         return TaskResource::make($task);
     }
@@ -34,6 +42,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
+        Gate::authorize('view', $task);
         return TaskResource::make($task);
     }
 
@@ -42,6 +51,11 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {
+        // if( $request->user()->cannot('update', $task)) {
+        //     abort(403, "this action is unauthorized.");
+        // }
+        Gate::authorize('update', $task);
+
         $task->update($request->validated());
         return TaskResource::make($task);
     }
@@ -51,6 +65,11 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
+        // if( request()->user()->cannot('delete', $task)) {
+        //     abort(403, "this action is unauthorized.");
+        // }
+        Gate::authorize('delete', $task);
+
         $task->delete();
 
         return response()->noContent();
