@@ -39,3 +39,40 @@ Vue:
 npm init vue@latest
 npm init vite@latest
 browser: vite:new/vue
+
+npm run dev
+
+----------
+import TagsInput from './components/TagsInput.vue'
+const app = createApp(App)
+app.component("tags-input", TagsInput);
+app.mount('#app')
+----------
+<style scoped></style>
+
+<script>
+  import TagsInput from './components/TagsInput.vue';
+  export default {
+    components: {
+      TagsInput
+    }
+  }
+</script>
+-----------
+<tags-input />
+
+<tags-input></tags-input>
+<TagsInput />
+
+-----------
+<div>{{ tags }}</div>
+<div>{{ tags.length }}</div>
+<div v-text="tags.length"></div>
+export default {
+  data: () => ({
+    tags: ["vue", "react", "angular"]
+  })
+}
+----------------------
+import { computed, ref, reactive, toRef, toRefs, watch, watchEffect } from 'vue';
+-----------------------
